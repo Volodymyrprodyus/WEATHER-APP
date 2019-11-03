@@ -9,37 +9,69 @@ body{
     font-family: 'Titillium Web';
     font-weight: 400;
     text-rendering: optimizeLegibility;
-    background-color: rgb(25,35,45);
+    background-image: url(./images/guest-post-why-clouds-hold-the-key-to-better-climate-models.jpg);
+    background-repeat: no-repeat;
+    /* background-color: rgb(25,35,45); */
 }
 
-.spinner {
-    padding-top: 40px;
-}
+.location {
+    font-size: 1rem;
+    text-shadow: 1px 1px 1px #004966;
+  }
 
 ::selection{
     background-color: transparent;
 }
 .container{
-    width: 100vw;
-    height: 100vh;
-    display:flex;
+    width: auto;
+    height: auto;
+    /* display:flex; */
+    justify-content: center;
 }
+
+.app-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.app-form{
+    display: flex;
+      
+}
+.ui-menu .ui-menu-item a,
+    .ui-menu .ui-menu-item a.ui-state-hover,
+    .ui-menu .ui-menu-item a.ui-state-active {
+        font-weight: normal;
+        margin: -1px;
+        text-align:left;
+        font-size:14px;
+    }
+    .ui-autocomplete-loading {
+        background: white url("./ui-anim_basic_16x16.gif") right center no-repeat;
+    }
+    #city {
+        width: 300px;
+    }
+
 .card-wrapper{
     position: relative;
-    margin: auto;
+    /* margin: auto; */
     overflow: visible;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     perspective: 1000px;
     transform-style: preserve-3d;
 }
-.card,
-.icon,
-.cloud-group,
-.sun-group,
-.rain-group{
+
+.card-wrapper-section {
+    display: flex;
+    margin: 20px;
+}
+
+
+.card {
     position: relative;
 }
 .box-highlight{
@@ -49,15 +81,18 @@ body{
     text-shadow: 0 5px 5px rgb(25,35,45);
 }
 .card{
-    width: 200px;
-    padding: 16px;
-    margin-bottom: 60px;
+    width: auto;
+    padding: 10px;
+    /* margin-bottom: 30px; */
     text-align: center;
     background-color: rgb(25,35,45);
     box-sizing: border-box;
     transition: all 500ms ease-out;
     transform: rotateY(180deg);
     backface-visibility: hidden;
+}
+.card-transparent {
+    background-color: unset;
 }
 .card:hover{
     box-shadow: 0 0 20px 10px rgb(5,15,25);
@@ -69,131 +104,54 @@ body{
 .card-header{
     padding-bottom: 8px;
     border-bottom: 1px solid rgb(200,200,200);
-    margin: 0;
+    margin: 0 0 5px 0;
     text-transform: capitalize;
 }
 .card-temp{
-    margin: 5px 0 10px 0;
-    font-size: 4em;
+    margin: 0;
+    font-size: 3em;
+    color:  #FFAC33;
+}
+
+.clouds-image {
+    margin: 5px 0 5px 0;
+    width: 80px; 
+    height: 80px;
+}
+
+.card-temp-min, .card-temp-max{
+    margin: 3px 0 3px 0;
+    font-size: 1em;
     color: white;
 }
-.card-info{
+
+.card-temp-wrap {
+    display: flex;
+    justify-content: space-between;
+    background-color: #3B444C;
+    background-color: rgba(255,255,255,.15);
+}
+
+.card-temp-range {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.card-info, .card-add-info{
     padding-top: 8px;
     border-top: 1px solid rgb(200,200,200);
-    margin: 10px 0 0 0;
+    margin: 5px 0 0 0;
     font-size: 1.25em;
 
 }
-.card-temp::after{
+.card-temp-min::after, .card-temp-max::after, .card-temp::after{
     content: "\00B0";
 }
-.icon{
-    margin-top: 50px;
-    display:flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-.cloud-group{
-    width: 120px;
-    height: 106px;
-}
-.icon-cloud{
-    position: absolute;
-    background-color: white;
-    display: block;
-}
-.shadow-cloud-clip{
-    box-shadow: 2px -6px 0 rgb(25,35,45);
-}
-.cloud-base{
-    top: 27px;
-    left: 0;
-    width: 100%;
-    height: 45px;
-    border-radius: 40px;
-    z-index: 1;
-}
-.cloud-circle{
-    top: 0;
-    left: 15px;
-    width: 60px;
-    height: 60px;
-    border-radius: 60px;
-    z-index: 2;
-}
-.cloud-circle::after{
-    content: "";
-    position: absolute;
-    top: 8px;
-    left: 46px;
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: inherit;
-    box-shadow: 1px -6px 0 rgb(25,35,45);
 
-}
-.sun{
-    top: -12px;
-    left: 53px;
-    width: 60px;
-    height: 60px;
-    border-radius: 60px;
-}
-.sunshine,
-.sunshine::before,
-.sunshine::after{
-    position: absolute;
-    width: 18px;
-    height: 8px;
-    border-radius: 8px;
-}
-.sunshine{
-    top: 17px;
-    right: -17px;
-}
-.sunshine::before,
-.sunshine::after,
-.rain::before,
-.rain::after{
-    content: "";
-    background-color: inherit;
-}
-.sunshine::before{
-    top: -48px;
-    right: 45px;
-    transform: rotate(-90deg);
-}
-.sunshine::after{
-    top: -33px;
-    right: 11px;
-    transform: rotate(-45deg);
-}
-.rain{
-    left: 0;
-    bottom: -86px;
-    transform: rotate(-75deg);
-}
-.rain,
-.rain::before,
-.rain::after{
-    position: absolute;
-    width: 40px;
-    height: 8px;
-    border-radius: 8px;
-    box-shadow: 2px 0 0 4px rgb(25,35,45);
-    z-index: 2;
-}
-.rain::before{
-    left: 9px;
-    bottom: -35px
-}
-.rain::after{
-    right: -18px;
-    bottom: -69px
-}
 
-/*ANIMAÇÕES*/
+
 .anim-flip{
     animation-name: flip;
     animation-duration: 1s;
