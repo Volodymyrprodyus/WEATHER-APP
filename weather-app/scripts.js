@@ -41,13 +41,11 @@
   
 
   getByGoogle = (latGoogle, lngGoogle) => {
-
     const mapOptions = {
         zoom: 10,
         type: "ROADMAP",
         center: new google.maps.LatLng(latGoogle, lngGoogle)
     };
-    
     const map = new google.maps.Map(document.getElementById("map"), mapOptions);
     const geocoder = new google.maps.Geocoder();  
     let bounds;
@@ -125,24 +123,24 @@
 
 
 
-     const newPropInfo = {
-      weather: resp.weather[0].main,
-      temperature: Math.round((resp.main.temp)*10),
-      min: Math.round((resp.main.temp_min)*10)/10,
-      max: Math.round((resp.main.temp_max)*10)/10,
-      humidity: resp.main.humidity,
-      pressure: resp.main.pressure,
-      windSpeed: resp.wind.speed,
-      windDir: resp.wind.deg
-    }
+      const newPropInfo = {
+        weather: resp.weather[0].main,
+        temperature: Math.round((resp.main.temp)*10),
+        min: Math.round((resp.main.temp_min)*10)/10,
+        max: Math.round((resp.main.temp_max)*10)/10,
+        humidity: resp.main.humidity,
+        pressure: resp.main.pressure,
+        windSpeed: resp.wind.speed,
+        windDir: resp.wind.deg
+      }
 
-    const newPropDef = {
-      temperature: "°C",
-      humidity: "%",
-      pressure: "hPa",
-      windSpeed: "m/s",
-      windDegrees: "WSW"
-    }
+      const newPropDef = {
+        temperature: "°C",
+        humidity: "%",
+        pressure: "hPa",
+        windSpeed: "m/s",
+        windDegrees: "WSW"
+      }
       
       renderWetherList(resp.id, newPropInfo, newPropDef);
       getByGoogle(latG, lonG);
@@ -192,11 +190,9 @@
   split = function (val) {
     return val.split(/,\s*/);
   }
-
   extractLast = function (term) {
     return split(term).pop();
   }
-  
   extractFirst = function (term) {
     return split(term)[0];
   }
@@ -228,7 +224,6 @@
             cityName = terms[0];
             $(".card-city").whether({ city: cityName });
         }
-
         return false;
     },
     focus: function() {
@@ -236,7 +231,6 @@
       return false;
     },
   });
-
   $citiesField.autocomplete("option", "delay", 100);
 
 })(jQuery);
