@@ -233,7 +233,7 @@ $(document).ready(function(){
   });
   $citiesField.autocomplete("option", "delay", 100);
 
-})(jQuery);
+})(jQuery)
 });
 
 
