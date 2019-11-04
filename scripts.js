@@ -1,4 +1,4 @@
-
+$(document).ready(function(){
 (function($) {
 
   let $citiesField = jQuery("#city");
@@ -234,6 +234,6 @@
   $citiesField.autocomplete("option", "delay", 100);
 
 })(jQuery);
-
+}
 
 
