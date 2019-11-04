@@ -1,5 +1,5 @@
 Your Weather App
-This page is a small, HTML- and JS-only (JQuery), website to show current basic weather information for a different cities using search by city or Google Maps Search.
+This page is a small, HTML, CSS3 and JS-only (JQuery), website to show current basic weather information for a different cities using search by city or Google Maps Search.
 
 API Key
 The API keys is used in this project for Google Geocoding and for api.openweathermap.org.
