@@ -1,16 +1,10 @@
 
-
-
 (function($) {
 
-  
   let $citiesField = jQuery("#city");
   let cityName = "";
   let location = "Lviv";
   let cityId = "";
-
-
-
 
   getSuccessGeo = function(position) {
     const lat = position.coords.latitude;
@@ -29,6 +23,7 @@
       location = currentLocation;
       location = location.replace(/'/g, '');
       $(".card-city").whether({ city: location });
+      $(".current-location-text").text(currentLocation);
     
       $('.spinner').css('display', 'none');
     }).fail(() => {
@@ -39,7 +34,7 @@
   
   getError = function(err) {
     $('.spinner').css('display', 'none');
-    $('.error-message').html(`<span class="fa fa-exclamation-circle fa-lg fa-fw"></span> ${err.message}.`).css('display', 'block');
+    $('.error-message').html(`<span></span> ${err.message}.`).css('display', 'block');
   }
   
   navigator.geolocation.getCurrentPosition(getSuccessGeo, getError);
@@ -112,34 +107,83 @@
     $.ajax(
       `http://api.openweathermap.org/data/2.5/weather?appid=${weatherAPIKey}&q=${options.city}&units=metric`
     ).done(function(resp) {
-      const temp = resp.main.temp;
-      const temp_min = resp.main.temp_min;
-      const temp_max = resp.main.temp_max;
+      const temp = Math.round((resp.main.temp)*10)/10;
+      const temp_min =  Math.round((resp.main.temp_min)*10)/10;
+      const temp_max = Math.round((resp.main.temp_max)*10)/10;
       const weatherMain = resp.weather[0].main;
       const weatherMainDescription = resp.weather[0].description;
       const latG = resp.coord.lat;
       const lonG = resp.coord.lon;
+
+      let iconCode = resp.weather[0].icon;
+      let iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+      $(".icon").html("<img src='" + iconUrl  + "'>");
       
       _this.find(".card-header").text(options.city);
       _this.find(".card-temp").text(temp);
-      _this.find(".card-temp-min").text('min ' + temp_min);
-      _this.find(".card-temp-max").text('max ' + temp_max);
       _this.find(".card-info").text(weatherMain + ', ' + weatherMainDescription);
+
+
+
+     const newPropInfo = {
+      weather: resp.weather[0].main,
+      temperature: Math.round((resp.main.temp)*10),
+      min: Math.round((resp.main.temp_min)*10)/10,
+      max: Math.round((resp.main.temp_max)*10)/10,
+      humidity: resp.main.humidity,
+      pressure: resp.main.pressure,
+      windSpeed: resp.wind.speed,
+      windDir: resp.wind.deg
+    }
+
+    const newPropDef = {
+      temperature: "°C",
+      humidity: "%",
+      pressure: "hPa",
+      windSpeed: "m/s",
+      windDegrees: "WSW"
+    }
       
-      renderWetherList(resp.id, resp.main);
+      renderWetherList(resp.id, newPropInfo, newPropDef);
       getByGoogle(latG, lonG);
     });
     return this;
   };
-  //$(".card-city").whether({ city: location });
+  $(".card-city").whether({ city: location });
   
 
-  renderWetherList = (respId, obj) => {
+  renderWetherList = (respId, obj, objDef) => {
     if (respId !== cityId) {
       $(".card-transparent").empty();
       for (let prop in obj) {
-        params = $(`<p class="card-add-info"></p>`).text(prop + `  `+ obj[prop]);
-        $(".card-transparent").append(params);
+        infoItem = $(`<div class="card-info-item"></div>`);
+        paramsName = $(`<p class="card-add-info"></p>`).text(prop );
+        paramsProp = $(`<p class="card-add-info"></p>`).text(obj[prop]);
+
+        infoItem.append(paramsName);
+        infoItem.append(paramsProp);
+
+        if (prop == 'temperature' || prop == 'min' || prop == 'max' ) {
+          paramsDef = $(`<p class="card-add-info"></p>`).text(objDef.temperature);
+          infoItem.append(paramsDef);
+        }
+        if (prop == 'humidity') {
+          paramsDef = $(`<p class="card-add-info"></p>`).text(objDef.humidity);
+          infoItem.append(paramsDef);
+        }
+        if (prop == 'pressure') {
+          paramsDef = $(`<p class="card-add-info"></p>`).text(objDef.pressure);
+          infoItem.append(paramsDef);
+        }
+        if (prop == 'windSpeed') {
+          paramsDef = $(`<p class="card-add-info"></p>`).text(objDef.windSpeed);
+          infoItem.append(paramsDef);
+        }
+        if (prop == 'windDir') {
+          paramsDef = $(`<p class="card-add-info"></p>`).text(objDef.windDir);
+          infoItem.append(paramsDef);
+        }
+        $(".card-transparent").append(infoItem);
       }
       cityId = respId;
     }
